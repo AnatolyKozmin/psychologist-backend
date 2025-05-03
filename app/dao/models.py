@@ -3,7 +3,7 @@ from typing import Optional, List
 from sqlalchemy import Integer, Text, ForeignKey, DateTime, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import time, date 
-from app.dao.database import Base
+from dao.database import Base
 
 
 class User(Base):
@@ -27,28 +27,14 @@ class Doctor(Base):
     last_name: Mapped[str]
     patronmic: Mapped[Optional[str]]
     special: Mapped[str]
-    specialization_id: Mapped[int] = mapped_column(ForeignKey("specializations.id"), server_default=text("1"))
     work_experience: Mapped[int] = mapped_column(Integer, nullable=False)
-    experience: Mapped[str]
+    adress: Mapped[str]
     description: Mapped[str] = mapped_column(Text)
     photo: Mapped[str]
+    visit_card: Mapped[str]
 
     # ОТНОШЕНИЯ 
     bookings: Mapped[List["Booking"]] = relationship(back_populates="doctor")
-
-    specialization: Mapped["Specialization"] = relationship("Specialization", back_populates="doctors",
-                                                            lazy="joined")
-
-class Specialization(Base):
-    __tablename__ = "specializations"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    description: Mapped[str] = mapped_column(Text)
-    icon: Mapped[str]
-    label: Mapped[str]
-    Specialization: Mapped[str]
-
-    doctors: Mapped[List["Doctor"]] = relationship(back_populates="specialization")
 
 
 class Booking(Base):
@@ -69,4 +55,3 @@ class Booking(Base):
     # ОТНОШЕНИЯ
     doctor: Mapped["Doctor"] = relationship(back_populates="bookings")
     user: Mapped["User"] = relationship(back_populates="bookings")
-    

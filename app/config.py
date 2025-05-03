@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     FORMAT_LOG: str = "{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}"
     LOG_ROTATION: str = '10 MB'
     DB_URL: str = 'postgresql+asyncpg://psycho:1234@localhost:5432/psycho_db'
+    STORE_URL: str = 'sqlite:///data/jobs.sqlite'
     BASE_SITE: str
     TG_API_SITE: str
     FRONT_SITE: str 
