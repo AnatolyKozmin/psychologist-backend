@@ -1,6 +1,6 @@
 from datetime import datetime 
 from typing import Optional, List 
-from sqlalchemy import Integer, Text, ForeignKey, DateTime, text
+from sqlalchemy import Integer, Text, ForeignKey, DateTime, text, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import time, date 
 from dao.database import Base
@@ -40,7 +40,7 @@ class Doctor(Base):
 class Booking(Base):
     __tablename__ = "booking"
 
-    id: Mapped[str] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctors.id"))
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     day_booking: Mapped[date] = mapped_column(nullable=False)
@@ -55,3 +55,16 @@ class Booking(Base):
     # ОТНОШЕНИЯ
     doctor: Mapped["Doctor"] = relationship(back_populates="bookings")
     user: Mapped["User"] = relationship(back_populates="bookings")
+
+
+class Appintments(Base):
+    __tablename__ = 'appointments'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    doctor_id: Mapped[int] = mapped_column(ForeignKey("doctors.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    day_appintment: Mapped[date] = mapped_column()
+    presense: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+

@@ -50,8 +50,15 @@ class BookingDAO(BaseDAO[Booking]):
             })
         return data_list
     
+   
+
+
+class DoctorDAO(BaseDAO[Doctor]):
+    model = Doctor 
+
     @classmethod
-    async def generate_working_hours(cls, start_hour=8, end_hour=20):
-        f'''Должно генерировать список рабочих часов, но вопрос нужно ли ? '''
-        ...
+    async def create_time_for_reception(cls, session: AsyncSession, doctor_id: int):
+        query = select(cls.model).where(doctor_id == id)
+        result = await session.execute(query)
+        
         
